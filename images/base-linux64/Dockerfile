@@ -1,6 +1,9 @@
 ARG GH_REPO=ghcr.io/btbn/ffmpeg-builds
 FROM $GH_REPO/base:latest
 
+# Install ALSA development files for cross-compilation
+RUN apt-get update && apt-get install -y --no-install-recommends libasound2-dev && apt-get clean && rm -rf /var/lib/apt/lists/*
+
 RUN --mount=src=ct-ng-config,dst=/.config \
     git clone --filter=blob:none https://github.com/crosstool-ng/crosstool-ng.git /ct-ng && cd /ct-ng && \
     ./bootstrap && \
