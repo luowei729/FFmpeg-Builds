@@ -15,6 +15,8 @@ ffbuild_dockerbuild() {
         --prefix="$FFBUILD_PREFIX"
         --disable-shared
         --enable-static
+        --without-pic
+        --without-versioned
         --with-configdir=/usr/share/alsa
         --with-plugindir=/usr/lib/alsa-lib
         --disable-python
@@ -38,6 +40,10 @@ ffbuild_dockerbuild() {
 
 ffbuild_configure() {
     echo --enable-alsa
+}
+
+ffbuild_libs() {
+    echo -Wl,--whole-archive -lasound -Wl,--no-whole-archive -lm -ldl -lpthread -lrt
 }
 
 ffbuild_unconfigure() {
