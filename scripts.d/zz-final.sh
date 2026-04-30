@@ -19,6 +19,7 @@ ffbuild_depends() {
     echo x11
     echo vulkan
     echo amf
+    echo alsa
     echo aom
     echo aribb24
     echo avisynth
