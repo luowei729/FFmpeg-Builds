@@ -18,8 +18,6 @@ ffbuild_dockerbuild() {
         --with-configdir=/usr/share/alsa
         --with-plugindir=/usr/lib/alsa-lib
         --disable-python
-        --disable-rawmidi
-        --disable-sequencer
         --disable-alisp
         --disable-old-symbols
     )
