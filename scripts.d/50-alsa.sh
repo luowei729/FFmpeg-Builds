@@ -15,7 +15,6 @@ ffbuild_dockerbuild() {
         --prefix="$FFBUILD_PREFIX"
         --disable-shared
         --enable-static
-        --with-pic
         --with-configdir=/usr/share/alsa
         --with-plugindir=/usr/lib/alsa-lib
         --disable-python
