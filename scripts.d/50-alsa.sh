@@ -9,6 +9,9 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerbuild() {
+    # ALSA needs librt.a libpthread.a libm.a libdl.a in the cross-compilation sysroot
+    # These are required by alsa.pc Libs.private entries for static linking
+
     autoreconf -fi
 
     local myconf=(

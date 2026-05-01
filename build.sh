@@ -35,31 +35,14 @@ cat <<EOF >"$BUILD_SCRIPT"
     git clone --filter=blob:none --branch='$GIT_BRANCH' '$FFMPEG_REPO' ffmpeg
     cd ffmpeg
 
-    echo "=== DEBUG: PKG_CONFIG_LIBDIR=$PKG_CONFIG_LIBDIR ==="
-    echo "=== DEBUG: Checking alsa.pc ==="
-    find /opt/ffbuild -name 'alsa.pc' 2>/dev/null || echo "alsa.pc not found under /opt/ffbuild"
-    echo "=== DEBUG: pkg-config --exists alsa ==="
-    pkg-config --exists alsa && echo "OK" || echo "FAILED: pkg-config --exists alsa"
-    echo "=== DEBUG: pkg-config --cflags alsa ==="
-    pkg-config --cflags alsa 2>&1 || echo "FAILED"
-    echo "=== DEBUG: pkg-config --libs alsa ==="
-    pkg-config --libs alsa 2>&1 || echo "FAILED"
-    echo "=== DEBUG: pkg-config --static --libs alsa ==="
-    pkg-config --static --libs alsa 2>&1 || echo "FAILED"
-    echo "=== DEBUG: alsa.pc content ==="
-    cat /opt/ffbuild/lib/pkgconfig/alsa.pc 2>/dev/null || echo "Not found"
-    echo "=== DEBUG: ls /opt/ffbuild/lib/ ==="
-    ls -la /opt/ffbuild/lib/libasound* 2>/dev/null || echo "libasound not found"
-    echo "=== END DEBUG ==="
-
     ./configure --prefix=/ffbuild/prefix --pkg-config-flags="--static" \$FFBUILD_TARGET_FLAGS \$FF_CONFIGURE \
         --extra-cflags="\$FF_CFLAGS" --extra-cxxflags="\$FF_CXXFLAGS" --extra-libs="\$FF_LIBS" \
         --extra-ldflags="\$FF_LDFLAGS" --extra-ldexeflags="\$FF_LDEXEFLAGS" \
         --cc="\$CC" --cxx="\$CXX" --ar="\$AR" --ranlib="\$RANLIB" --nm="\$NM" \
         --extra-version="https://www.lkz.pub \$(date +%Y%m%d-%H%M%S)-CST" || {
         ret=\$?
-        echo "=== CONFIGURE FAILED, dumping config.log ==="
-        grep -B 2 -A 50 "check_pkg_config alsa\|check_lib alsa\|BEGIN.*alsa\|END.*alsa" ffbuild/config.log 2>/dev/null | head -80
+        echo "=== CONFIGURE FAILED ==="
+        grep -B 2 -A 50 "check_pkg_config alsa\|check_lib alsa" ffbuild/config.log 2>/dev/null | head -80
         cp ffbuild/config.log /ffbuild/config.log 2>/dev/null || true
         exit \$ret
     }
