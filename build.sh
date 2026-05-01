@@ -59,7 +59,7 @@ cat <<EOF >"$BUILD_SCRIPT"
         --extra-version="https://www.lkz.pub \$(date +%Y%m%d-%H%M%S)-CST" || {
         ret=\$?
         echo "=== CONFIGURE FAILED, dumping config.log ==="
-        grep -A 30 "alsa" ffbuild/config.log 2>/dev/null | head -50
+        grep -B 2 -A 50 "check_pkg_config alsa\|check_lib alsa\|BEGIN.*alsa\|END.*alsa" ffbuild/config.log 2>/dev/null | head -80
         cp ffbuild/config.log /ffbuild/config.log 2>/dev/null || true
         exit \$ret
     }
