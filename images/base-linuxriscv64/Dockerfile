@@ -24,11 +24,9 @@ RUN \
         -and -not -name 'libpthread.*' \
         \) -delete && \
     find /opt/ct-ng \( \
-        -name 'libdl.a' \
         -or -name 'libc.a' \
         -or -name 'libm.a' \
         -or -name 'libmvec.a' \
-        -or -name 'librt.a' \
         \) -delete && \
     mkdir /opt/ffbuild
 
